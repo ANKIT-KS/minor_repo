@@ -14,6 +14,6 @@ Ultrasonic sensors.
 Processing software.
  
 Languages used:
-JAVA
-PYTHON
-MYSQL
+JAVA.
+PYTHON.
+MYSQL.
