@@ -3,7 +3,8 @@ minor_repo
 This project is about wirelessly controlling a bot.
 Establishing a 2-way communication between the bot and the PC via BlueTooth Technology.
 A sensor on bot will send back the values wirelessly,whenever prompted.
-These value would be stored in the database for further use.
+These value would be stored in a database for further use.
+Python would be used to pick sensor values from the arduino code and write it to a text file.
 Interactive UI for end-user is also planned using Processing software.
 
 
