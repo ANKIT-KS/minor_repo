@@ -1,3 +1,6 @@
+import processing.serial.*;
+Serial myPort;  // Create object from Serial class
+int val;
 int triX, triY,x2,y2;// Position of square button
 int x1=700;
 int y1=500;
@@ -20,6 +23,9 @@ void setup()
 size(1360, 700);
   background(51, 0, 51);
   
+  String portName = Serial.list()[0];
+  myPort = new Serial(this, portName, 9600);
+  
   triHighlight = color(150);
   circleHighlight = color(204);
   triColor = color(200);
@@ -34,6 +40,7 @@ void draw() {
     //fill(96,96,96);
   if (mousePressed == true) {
     fill(255,255,0);
+     myPort.write('U');
     x2=x1;
     y2=y1-1;
     stroke(255);
@@ -50,6 +57,7 @@ void draw() {
     //fill(96,96,96);
   if (mousePressed == true) {
     fill(255,255,0);
+     myPort.write('R');
     x2=x1+1;
     y2=y1;
     stroke(255);
@@ -68,6 +76,7 @@ void draw() {
     //fill(96,96,96);
   if (mousePressed == true) {
     fill(255,255,0);
+     myPort.write('L');
     x2=x1-1;
     y2=y1;
     stroke(255);
@@ -86,6 +95,7 @@ void draw() {
     //fill(96,96,96);
   if (mousePressed == true) {
      fill(255,255,0);
+      myPort.write('B');
     x2=x1;
     y2=y1+1;
     stroke(255);
@@ -155,6 +165,7 @@ void mouseClicked(){
   if(circleOverS){
   text(lines[1],128,y3);
   text(lines[1],x2+3,y2+20);
+   myPort.write('S');
     y3=y3+10;
     i++;
   }
@@ -202,13 +213,12 @@ boolean overCircle(int x, int y, int diameter) {
 
 
 
-
-import processing.serial.*;
+/*import processing.serial.*;
 
 Serial myPort;  // Create object from Serial class
 int val;      // Data received from the serial port
 
-void setup() 
+/*void setup() 
 {
   size(200, 200);
   // I know that the first port in the serial list on my mac
@@ -232,4 +242,4 @@ void draw()
     fill(204);                 // set fill to light gray
   }
   rect(50, 50, 100, 100);
-}
+}*/
