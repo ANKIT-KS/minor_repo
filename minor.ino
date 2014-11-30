@@ -7,6 +7,7 @@ char val; // Data received from the serial port
  void setup() {
  pinMode(ledPin1, OUTPUT); // Set pin as OUTPUT
  pinMode(ledPin2, OUTPUT);
+ pinMode(UltraSensor, INPUT);
  Serial.begin(9600); // Start serial communication at 9600 bps
  }
  
@@ -54,9 +55,12 @@ else if (val == 'B') // If B was received
  else if (val == 'S') // If S was received
  { 
  sensorReading = analogRead(UltraSensor); 
- Serial.write(sensorReading);
+ 
  Serial.println(sensorReading);
+ Serial.println(" ");
+ Serial.write(sensorReading);
  val='N';
+ sensorReading = 0;
  delay(10);
  
  }

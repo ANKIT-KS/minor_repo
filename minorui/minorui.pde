@@ -1,5 +1,6 @@
 import processing.serial.*;
-Serial myPort; // Create object from Serial class
+Serial myPortRead; // Create object from Serial class
+Serial myPort;
 PrintWriter output;
   
 int g;
@@ -29,14 +30,19 @@ size(1360, 700);
   background(51, 0, 51);
   
   String portName = Serial.list()[0];
- //myPort = new Serial(this, "/dev/ttyACM0", 9600);
- //if (myPort.available()> 0) {
-   //  String value = myPort.readString();
-     //println(value);
+ myPortRead = new Serial(this, "/dev/ttyACM2", 9600);
+ myPort = new Serial(this, "/dev/ttyACM2", 9600);
+ if (myPortRead.available()> 0) {
+   int value = myPortRead.read();
+     println(value);
      //String[] valueArray = split(value, ' ');
-     //saveStrings("list1.txt", valueArray);
-// }
- //output = createWriter("/home/ankit/sketchbook/minorui/list1.txt"); 
+    //saveStrings("list1.txt", value);
+ 
+ output = createWriter("/home/ankit/sketchbook/minorui/list1.txt");
+ output.println("A"); 
+ output.flush();
+ output.close();
+ }
   triHighlight = color(150);
   circleHighlight = color(204);
   triColor = color(200);
@@ -51,7 +57,7 @@ void draw() {
     //fill(96,96,96);
   if (mousePressed == true) {
     fill(255,255,0);
-    // myPort.write('U');
+     myPort.write('U');
      backtrack[j]='B';
      j++;
     x2=x1;
@@ -70,7 +76,7 @@ void draw() {
     //fill(96,96,96);
   if (mousePressed == true) {
     fill(255,255,0);
-     //myPort.write('R');
+    myPort.write('R');
       backtrack[j]='L';
      j++;
     x2=x1+1;
@@ -91,7 +97,7 @@ void draw() {
     //fill(96,96,96);
   if (mousePressed == true) {
     fill(255,255,0);
-    // myPort.write('L');
+     myPort.write('L');
       backtrack[j]='R';
      j++;
     x2=x1-1;
@@ -112,7 +118,7 @@ void draw() {
     //fill(96,96,96);
   if (mousePressed == true) {
      fill(255,255,0);
-      //myPort.write('B');
+    myPort.write('B');
        backtrack[j]='U';
      j++;
     x2=x1;
@@ -185,7 +191,7 @@ void mouseClicked(){
   if(circleOverS){
   text(lines[1],128,y3);
   text(lines[1],x2+3,y2+20);
-   //myPort.write('S');
+   myPort.write('S');
     y3=y3+10;
     i++;
   }
