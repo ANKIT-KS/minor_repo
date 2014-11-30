@@ -1,16 +1,12 @@
 import processing.serial.*;
-Serial myPort; // Create object from Serial class
-PrintWriter output;
-  
-int g;
-char[] backtrack = new char[100000];
+Serial myPort;  // Create object from Serial class
 int val;
 int triX, triY,x2,y2;// Position of square button
 int x1=700;
 int y1=500;
 int y3=500;
 int i=1;
-int j=0;
+int j;
 int circleX, circleY;
 color triColor, circleColor, baseColor,currentColor;
 color triHighlight, circleHighlight;
@@ -18,7 +14,6 @@ boolean circleOverU = false;
 boolean circleOverR = false;
 boolean circleOverL = false;
 boolean circleOverB = false;
-boolean circleOverT = false;
 boolean triOver = false;
 boolean circleOverS = false;
 String lines[] = loadStrings("/home/ankit/sketchbook/minorui/list.txt");
@@ -29,14 +24,8 @@ size(1360, 700);
   background(51, 0, 51);
   
   String portName = Serial.list()[0];
- //myPort = new Serial(this, "/dev/ttyACM0", 9600);
- //if (myPort.available()> 0) {
-   //  String value = myPort.readString();
-     //println(value);
-     //String[] valueArray = split(value, ' ');
-     //saveStrings("list1.txt", valueArray);
-// }
- //output = createWriter("/home/ankit/sketchbook/minorui/list1.txt"); 
+  myPort = new Serial(this, portName, 9600);
+  
   triHighlight = color(150);
   circleHighlight = color(204);
   triColor = color(200);
@@ -51,9 +40,7 @@ void draw() {
     //fill(96,96,96);
   if (mousePressed == true) {
     fill(255,255,0);
-    // myPort.write('U');
-     backtrack[j]='B';
-     j++;
+     myPort.write('U');
     x2=x1;
     y2=y1-1;
     stroke(255);
@@ -70,9 +57,7 @@ void draw() {
     //fill(96,96,96);
   if (mousePressed == true) {
     fill(255,255,0);
-     //myPort.write('R');
-      backtrack[j]='L';
-     j++;
+     myPort.write('R');
     x2=x1+1;
     y2=y1;
     stroke(255);
@@ -91,9 +76,7 @@ void draw() {
     //fill(96,96,96);
   if (mousePressed == true) {
     fill(255,255,0);
-    // myPort.write('L');
-      backtrack[j]='R';
-     j++;
+     myPort.write('L');
     x2=x1-1;
     y2=y1;
     stroke(255);
@@ -112,9 +95,7 @@ void draw() {
     //fill(96,96,96);
   if (mousePressed == true) {
      fill(255,255,0);
-      //myPort.write('B');
-       backtrack[j]='U';
-     j++;
+      myPort.write('B');
     x2=x1;
     y2=y1+1;
     stroke(255);
@@ -167,7 +148,6 @@ void draw() {
    ellipse(70,108, 75, 75);
    ellipse(127,164, 75, 75);
    ellipse(127,400, 75, 75);
-   ellipse(220,400, 75, 75);
    stroke(0);
    fill(51,0,51);
     triangle(113,63.5,128,37.5,143,63.5);//up
@@ -185,17 +165,12 @@ void mouseClicked(){
   if(circleOverS){
   text(lines[1],128,y3);
   text(lines[1],x2+3,y2+20);
-   //myPort.write('S');
+   myPort.write('S');
     y3=y3+10;
     i++;
   }
-  else if(circleOverT){
-    for(int k=0;k<j;k++)
-    
-  println(backtrack[k]);
-  }
   else
-   g++;
+  j++;
   }
   
   
@@ -218,12 +193,9 @@ void update(int x, int y) {
     circleOverS = true;
     //fill(255,255,0)
     }
-     else if(overCircle(220,400,75)){
-    circleOverT = true;
-     }
     //triOver = true;
   else {
-    circleOverU = triOver = circleOverR = circleOverL = circleOverB = circleOverT = circleOverS = false;
+    circleOverU = triOver = circleOverR = circleOverL = circleOverB = circleOverS = false;
   }
 }
 

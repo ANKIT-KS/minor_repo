@@ -1,11 +1,12 @@
 char val; // Data received from the serial port
- int Pin1 = 2;//right motor
- int Pin2 = 3; //left motor
+ int ledPin1 = 5;//right motor
+ int ledPin2 = 6; //left motor
  int sensorReading = 0;
  const int UltraSensor= A0; 
  
  void setup() {
- pinMode(ledPin, OUTPUT); // Set pin as OUTPUT
+ pinMode(ledPin1, OUTPUT); // Set pin as OUTPUT
+ pinMode(ledPin2, OUTPUT);
  Serial.begin(9600); // Start serial communication at 9600 bps
  }
  
@@ -53,6 +54,7 @@ else if (val == 'B') // If B was received
  else if (val == 'S') // If S was received
  { 
  sensorReading = analogRead(UltraSensor); 
+ Serial.write(sensorReading);
  Serial.println(sensorReading);
  val='N';
  delay(10);
