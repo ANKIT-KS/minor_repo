@@ -22,7 +22,7 @@ boolean circleOverB = false;
 boolean circleOverT = false;
 boolean triOver = false;
 boolean circleOverS = false;
-String lines[] = loadStrings("/home/ankit/sketchbook/minorui/list.txt");
+//String lines[] = loadStrings("/home/ankit/sketchbook/minorui/list.txt");
 
 void setup()
 {
@@ -30,19 +30,20 @@ size(1360, 700);
   background(51, 0, 51);
   
   String portName = Serial.list()[0];
- myPortRead = new Serial(this, "/dev/ttyACM2", 9600);
- myPort = new Serial(this, "/dev/ttyACM2", 9600);
- if (myPortRead.available()> 0) {
-   int value = myPortRead.read();
-     println(value);
+  println(portName);
+ //myPortRead = new Serial(this, "/dev/ttyACM2", 9600);
+ myPort = new Serial(this, "/dev/ttyACM0", 9600);
+ //if (myPortRead.available()> 0) {
+   //int value = myPortRead.read();
+     //println(value);
      //String[] valueArray = split(value, ' ');
     //saveStrings("list1.txt", value);
  
- output = createWriter("/home/ankit/sketchbook/minorui/list1.txt");
- output.println("A"); 
- output.flush();
- output.close();
- }
+ //output = createWriter("/home/ankit/sketchbook/minorui/list1.txt");
+ //output.println("A"); 
+ //output.flush();
+ ////output.close();
+ //}
   triHighlight = color(150);
   circleHighlight = color(204);
   triColor = color(200);
@@ -181,7 +182,12 @@ void draw() {
     triangle(54, 108, 83, 95, 83, 121);//left
     triangle(113, 154,143, 154, 128, 183);//bottom
     fill(255,255,255);
-
+    
+    
+    if ( myPort.available() > 0) {  // If data is available,
+    val = myPort.read();    // read it and store it in val
+  }
+//text(,128,y3);
 }
 
 
@@ -189,16 +195,18 @@ void draw() {
 
 void mouseClicked(){
   if(circleOverS){
-  text(lines[1],128,y3);
-  text(lines[1],x2+3,y2+20);
+  text(val,128,y3);
+  //text(lines[1],x2+3,y2+20);
    myPort.write('S');
     y3=y3+10;
     i++;
   }
   else if(circleOverT){
-    for(int k=0;k<j;k++)
-    
+    for(int k=0;k<j;k++){
+   myPort.write(backtrack[k]); 
   println(backtrack[k]);
+}
+  
   }
   else
    g++;

@@ -9,67 +9,95 @@ char val; // Data received from the serial port
  pinMode(ledPin2, OUTPUT);
  pinMode(UltraSensor, INPUT);
  Serial.begin(9600); // Start serial communication at 9600 bps
+ //Serial.flush();
  }
  
- void loop() {
+ void loop() {//digitalWrite(13, LOW);
+   
+ //Serial.flush(); 
+ //val = ''; 
  if (Serial.available()) // If data is available to read,
  { 
- val = Serial.read(); // read it and store it in val
+ val = Serial.read();
+ Serial.println(val); // read it and store it in val
  }
  if (val == 'U') // If U was received
  { 
- analogWrite(ledPin1, 128); // rotate right motor
- analogWrite(ledPin2, 128); // rotate left motor
+ //digitalWrite(13, LOW);
+ analogWrite(5, 128); // rotate right motor
+ analogWrite(6, 128); // rotate left motor
+ analogWrite(10, 0); // rotate right motor
+ analogWrite(11, 0); // rotate left motor
  val='N';
- delay(10);
- analogWrite(ledPin1, 0); // stop the motor
- analogWrite(ledPin2, 0); //stop the motor
+ delay(100);
+ analogWrite(5, 0); // stop the motor
+ analogWrite(6, 0); //stop the motor
+ analogWrite(10, 0); // rotate right motor
+ analogWrite(11, 0); // rotate left motor
+ //digitalWrite(13, HIGH);
  }
 else if (val == 'R') // If R was received
 { 
- analogWrite(ledPin1, 0); 
- analogWrite(ledPin2, 128);
+ analogWrite(5, 0); 
+ analogWrite(6, 128);
+ analogWrite(10, 0); // rotate right motor
+ analogWrite(11, 0); // rotate left motor
  val='N';
- delay(10);
- analogWrite(ledPin1, 0); 
- analogWrite(ledPin2, 0);
+ delay(100);
+ analogWrite(5, 0); 
+ analogWrite(6, 0);
+ analogWrite(10, 0); // rotate right motor
+ analogWrite(11, 0); // rotate left motor
  }
 else if (val == 'L') // If L was received
 { 
- analogWrite(ledPin1, 128); 
- analogWrite(ledPin2, 0);
+ analogWrite(5, 128); 
+ analogWrite(6, 0);
+ analogWrite(10, 0); // rotate right motor
+ analogWrite(11, 0); // rotate left motor
  val='N';
- delay(10);
- analogWrite(ledPin1, 0); 
- analogWrite(ledPin2, 0);
+ delay(100);
+ analogWrite(5, 0); 
+ analogWrite(6, 0);
+ analogWrite(10, 0); // rotate right motor
+ analogWrite(11, 0); // rotate left motor
  }
 else if (val == 'B') // If B was received
 { 
- analogWrite(ledPin1, -128); 
- analogWrite(ledPin2, -128);
+ analogWrite(5, 0); 
+ analogWrite(6, 0);
+ analogWrite(10, 128); // rotate right motor
+ analogWrite(11, 128); // rotate left motor
  val='N';
- delay(10);
- analogWrite(ledPin1, 0); 
- analogWrite(ledPin2, 0);
+ delay(100);
+ analogWrite(5, 0); 
+ analogWrite(6, 0);
+ analogWrite(10, 0); // rotate right motor
+ analogWrite(11, 0); // rotate left motor
  } 
  else if (val == 'S') // If S was received
  { 
+   Serial.flush();
  sensorReading = analogRead(UltraSensor); 
  
  Serial.println(sensorReading);
- Serial.println(" ");
+ //Serial.println(" ");
  Serial.write(sensorReading);
  val='N';
  sensorReading = 0;
- delay(10);
+ delay(100);
  
  }
  else {
- analogWrite(ledPin1, 0); 
- analogWrite(ledPin2, 0); 
+ analogWrite(5, 0); 
+ analogWrite(6, 0);
+ analogWrite(10, 0); // rotate right motor
+ analogWrite(11, 0); // rotate left motor 
  }
  delay(100);
- analogWrite(ledPin1, 0); 
- analogWrite(ledPin2, 0);
+ analogWrite(5, 0); 
+ analogWrite(6, 0);
+ analogWrite(10, 0); // rotate right motor
+ analogWrite(11, 0); // rotate left motor
  // Wait 100 milliseconds for next reading
  }
