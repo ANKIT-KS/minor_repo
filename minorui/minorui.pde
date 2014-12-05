@@ -4,9 +4,10 @@ Serial myPort;
 PrintWriter output;
 int val1; 
 int g;
-char[] backtrack = new char[100000];
+int f=0;
+char backtrack[] = new char[100000];
 int val;
-int triX, triY,x2,y2;// Position of square button
+int triX,triY,x2,y2;// Position of square button
 int x1=700;
 int y1=500;
 int y3=500;
@@ -32,7 +33,7 @@ size(1000, 700);
   String portName = Serial.list()[0];
   println(portName);
  //myPortRead = new Serial(this, "/dev/ttyACM2", 9600);
- myPort = new Serial(this, "/dev/ttyACM2", 9600);
+ myPort = new Serial(this, portName, 9600);
  //if (myPortRead.available()> 0) {
    //int value = myPortRead.read();
      //println(value);
@@ -208,11 +209,14 @@ void mouseClicked(){
     i++;
   }
   else if(circleOverT){
-    for(int k=j;k>=0;k--){
+    for(int k=j;k>=f;k--){
    myPort.write(backtrack[k]); 
   println(backtrack[k]);
 }
-  
+f=j;
+//Arrays.fill(backtrack, null);
+//for(int k=0;k<=j;k++)
+//backtrack[k]="X"; 
   }
   else
    g++;

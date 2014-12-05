@@ -2,7 +2,7 @@ import processing.serial.*;
 Serial myPortRead; // Create object from Serial class
 Serial myPort;
 PrintWriter output;
-  
+int val1; 
 int g;
 char[] backtrack = new char[100000];
 int val;
@@ -26,13 +26,13 @@ boolean circleOverS = false;
 
 void setup()
 {
-size(1360, 700);
+size(1000, 700);
   background(51, 0, 51);
   
   String portName = Serial.list()[0];
   println(portName);
  //myPortRead = new Serial(this, "/dev/ttyACM2", 9600);
- myPort = new Serial(this, "/dev/ttyACM0", 9600);
+ myPort = new Serial(this, "/dev/ttyACM2", 9600);
  //if (myPortRead.available()> 0) {
    //int value = myPortRead.read();
      //println(value);
@@ -167,14 +167,19 @@ void draw() {
 
  //up
  stroke(255);
- text("Sensor Values",115,470);
+ line(280,0,280,700);
+ text("PATH TRAVERSED",600,20);
+ text("ARROW KEYS",85,240);
+ text("SENSOR VALUE",30,470);
+ text("PANIC",165,350);
+ text("TRACE BACK",150,470);
  //fill(255,255,255);
    ellipse(128,55, 75, 75);
    ellipse(186,110, 75, 75);
    ellipse(70,108, 75, 75);
    ellipse(127,164, 75, 75);
-   ellipse(127,400, 75, 75);
-   ellipse(220,400, 75, 75);
+   ellipse(80,400, 75, 75);
+   ellipse(186,400, 75, 75);
    stroke(0);
    fill(51,0,51);
     triangle(113,63.5,128,37.5,143,63.5);//up
@@ -195,14 +200,15 @@ void draw() {
 
 void mouseClicked(){
   if(circleOverS){
-  text(val,128,y3);
-  //text(lines[1],x2+3,y2+20);
-   myPort.write('S');
+  myPort.write('S');
+  text(val,60,y3);
+  text(val,x2+3,y2+20);
+   
     y3=y3+10;
     i++;
   }
   else if(circleOverT){
-    for(int k=0;k<j;k++){
+    for(int k=j;k>=0;k--){
    myPort.write(backtrack[k]); 
   println(backtrack[k]);
 }
@@ -228,11 +234,11 @@ void update(int x, int y) {
     else if(overCircle(127,164,75)){
     circleOverB = true;
     }
-    else if(overCircle(128,400,75)){
+    else if(overCircle(80,400,75)){
     circleOverS = true;
     //fill(255,255,0)
     }
-     else if(overCircle(220,400,75)){
+     else if(overCircle(186,400,75)){
     circleOverT = true;
      }
     //triOver = true;
